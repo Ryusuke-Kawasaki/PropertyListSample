@@ -11,8 +11,9 @@ import UIKit
 class TableViewController: UITableViewController {
     
     var deviceList:[String] = []
+    var deviceList1:[String] = []
     
-    @IBAction func pushAddButton(_ sender: AnyObject) {
+    @IBAction func pushAddButton(_ sender: Any) {
         self.deviceList.append("Mac Book Air")
         if let path = Bundle.main.path(forResource: "Property List", ofType: "plist"){
             if let dict = NSMutableDictionary(contentsOfFile: path){
@@ -22,10 +23,9 @@ class TableViewController: UITableViewController {
             }
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //読み込むplistのパスを取得
         if let path = Bundle.main.path(forResource: "Property List", ofType: "plist") {
             //plistのデータをNSDictionaryで取得
@@ -34,12 +34,6 @@ class TableViewController: UITableViewController {
                 self.deviceList = dict.object(forKey: "AppleDevice") as! [String]
             }
         }
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,22 +44,17 @@ class TableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return self.deviceList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) 
 
-        // Configure the cell...
-        cell.textLabel?.text = self.deviceList[(indexPath as NSIndexPath).row]
+        cell.textLabel?.text = self.deviceList[indexPath.row]
         return cell
     }
 
